@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcortina <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/17 13:12:34 by gcortina          #+#    #+#             */
-/*   Updated: 2016/11/17 13:22:53 by gcortina         ###   ########.fr       */
+/*   Created: 2016/11/17 13:26:05 by gcortina          #+#    #+#             */
+/*   Updated: 2016/11/17 13:26:08 by gcortina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdarg.h>
 
-int		ft_printf(const char * restrict format, ...)
-{
-	format = "";
-	return (0);
-}
+int		ft_printf(const char * restrict format, ...);
+#endif
