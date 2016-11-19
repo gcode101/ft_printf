@@ -1,30 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcortina <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/17 13:12:34 by gcortina          #+#    #+#             */
-/*   Updated: 2016/11/17 13:22:53 by gcortina         ###   ########.fr       */
+/*   Created: 2016/08/15 09:54:44 by gcortina          #+#    #+#             */
+/*   Updated: 2016/09/26 12:28:03 by gcortina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_printf(const char * restrict format, ...)
+void	ft_putchar(char c)
 {
-	va_list	args;
-	char	*str;	
-
-	va_start(args, format);
-	while (1)
-	{
-		str = va_arg(args, char *);
-		if (str == NULL)
-			break ;
-		ft_putendl(str);
-	}
-	va_end(args);
-	return (0);
+	write(1, &c, 1);
 }

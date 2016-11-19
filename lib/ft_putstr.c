@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcortina <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/17 13:12:34 by gcortina          #+#    #+#             */
-/*   Updated: 2016/11/17 13:22:53 by gcortina         ###   ########.fr       */
+/*   Created: 2016/08/15 09:54:56 by gcortina          #+#    #+#             */
+/*   Updated: 2016/09/26 12:29:01 by gcortina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_printf(const char * restrict format, ...)
+void	ft_putstr(char const *str)
 {
-	va_list	args;
-	char	*str;	
+	int i;
 
-	va_start(args, format);
-	while (1)
+	i = 0;
+	if (str == NULL)
 	{
-		str = va_arg(args, char *);
-		if (str == NULL)
-			break ;
-		ft_putendl(str);
+		ft_putendl("(null)");
+		return ;
 	}
-	va_end(args);
-	return (0);
+	while (str[i] != '\0')
+	{
+		ft_putchar(str[i]);
+		i++;
+	}
 }
