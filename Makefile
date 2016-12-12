@@ -6,7 +6,7 @@
 #    By: gcortina <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/17 13:11:26 by gcortina          #+#    #+#              #
-#    Updated: 2016/12/12 13:53:59 by gcortina         ###   ########.fr        #
+#    Updated: 2016/12/12 14:12:39 by gcortina         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ FLAGS = -Wall -Wextra -Werror
 CC = gcc
 OPTIONS = -c -I $(HEADER) $(FLAGS)
 RLIB = ranlib
-SRC_FILES = ft_printf.c main.c str_conv.c format_reader.c get_flags.c get_len_flag.c \
+SRC_FILES = ft_printf.c str_conv.c format_reader.c get_flags.c get_len_flag.c \
 			get_pre.c handle_width.c ft_putwchar.c handle_wchar.c get_width.c \
 			handle_flags.c chr_conv.c ft_wstrsub.c ft_wstrlen.c ft_wmemset.c \
 			handle_wchar_width.c handle_wchar_str.c ft_wstrdup.c handle_wflags.c \
