@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unsigned_conv.c                                    :+:      :+:    :+:   */
+/*   decimal_conv.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcortina <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/09 14:40:20 by gcortina          #+#    #+#             */
-/*   Updated: 2016/12/09 14:40:22 by gcortina         ###   ########.fr       */
+/*   Created: 2016/12/07 14:31:47 by gcortina          #+#    #+#             */
+/*   Updated: 2016/12/07 14:31:50 by gcortina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		unsigned_conv(char *format, va_list args, int newline, char *long_flag)
+int				decimal_conv(char *format, va_list args, int newline, char *long_flag)
 {
 	int		num;
 	int		c_printed;
@@ -20,20 +20,21 @@ int		unsigned_conv(char *format, va_list args, int newline, char *long_flag)
 	char	*len_flag;
 	char	*flags;
 
+	// printf("inside decimal_conv\n");
 	if (long_flag)
 		len_flag = long_flag;
 	else
 		len_flag = get_len_flag(format);
-	arg = handle_un_lenflag(len_flag, args, 10);
+	arg = handle_dec_lenflag(len_flag, args);
 	if (ft_strchr(arg, '-'))
 		num = -1;
 	else
 		num = 1;
-	c_printed = 0;
 	flags = get_flags(format);
 	modify_arg(format, flags, &arg, num);
 	ft_putstr(arg);
+	c_printed = ft_strlen(arg);
 	if (newline)
 		ft_putchar('\n');
-	return (c_printed);	
+	return (c_printed);
 }

@@ -45,6 +45,8 @@ char	*ft_itoa_base(long long value, int base)
 	int			digits;
 	char		*re;
 
+	if (value == -9223372036854775807 - 1)
+		return ("-9223372036854775808");
 	num = value;
 	neg = 0;
 	if (value < 0 && base == 10)

@@ -67,6 +67,7 @@ int		hex_conv(char *format, va_list args, int newline, char x_or_p)
 		while (arg[++i])
 			arg[i] = ft_toupper(arg[i]);
 	ft_putstr(arg);
+	c_printed = ft_strlen(arg);
 	if (newline)
 		ft_putchar('\n');
 	return (c_printed);	

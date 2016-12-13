@@ -67,4 +67,5 @@ int		unsigned_conv(char *format, va_list args, int newline, char *long_flag);
 char	*handle_un_lenflag(char *len_flag, va_list args, int base);
 int		ft_toupper(int c);
 int		chr_count(char *str, char chr);
+int		wchr_len(wchar_t chr);
 #endif

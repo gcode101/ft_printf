@@ -41,8 +41,10 @@ int			ft_printf(const char * restrict format, ...)
 	// printf("inside ft_printf\n");
 	format_cpy = ft_strdup(format);
 	if ((numof_percent = percent_signs(format)) == 0)
+	{
 		ft_putstr(format);
-	c_printed = ft_strlen(format);
+		c_printed = ft_strlen(format);
+	}
 	va_start(args, format);
 	// printf("numof_percent: %d\n", numof_percent);
 	while (numof_percent--)
@@ -57,9 +59,14 @@ int			ft_printf(const char * restrict format, ...)
 		format_cpy = ft_strdup(temp + 1);
 		// printf("after temp format_cpy: %s\n", format_cpy);
 		c_printed += format_reader(&format_cpy, args);
+		// printf("c_printed: %d\n", c_printed);
 		if (!ft_strchr(format_cpy, '%'))
+		{
 			ft_putstr(format_cpy);
+			c_printed += ft_strlen(format_cpy);
+		}
 	}
-	va_end(args);
+	// printf("returning c_printed: %d\n", c_printed);
+		va_end(args);
 	return (c_printed);
 }

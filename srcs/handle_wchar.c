@@ -1,38 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_wchar_str.c                                 :+:      :+:    :+:   */
+/*   handle_wchar.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcortina <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/07 12:32:22 by gcortina          #+#    #+#             */
-/*   Updated: 2016/12/07 12:32:24 by gcortina         ###   ########.fr       */
+/*   Created: 2016/12/06 11:57:13 by gcortina          #+#    #+#             */
+/*   Updated: 2016/12/06 11:57:15 by gcortina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int				handle_wchar_str(char *len_flag, va_list args, int newline, char *format)
+int				handle_wchar(char *len_flag, va_list args, int newline, char *format)
 {
+	wchar_t chr;
 	wchar_t *str;
-	int		presicion;
 	char	*flags;
 	int		i;
+	int		ct;
 
 	i = -1;
+	ct = 0;
 	if (ft_strcmp(len_flag, "l") == 0)
 	{
-		str = va_arg(args, wchar_t *);
-		presicion = get_pre(format);
+		chr = (wchar_t)va_arg(args, wint_t);
 		flags = get_flags(format);
-		if (presicion >= 0 && presicion < ft_wstrlen(str))
-			str = ft_wstrsub(str, 0, presicion);
-		handle_wchar_width(format, &str);
-		handle_wflags(flags, &str);
-		while (str[++i])
-			ft_putwchar(str[i]);
+		if (get_width(format))
+		{
+			if (!(str = malloc(sizeof(wchar_t) * 2)))
+				return (-1);
+			str[0] = chr;
+			str[1] = '\0';
+			handle_wchar_width(format, &str);
+			handle_wflags(flags, &str);
+			while (str[++i])
+			{
+				ft_putwchar(str[i]);
+				ct += wchr_len(str[i]);
+			}
+		}
+		else
+		{
+			ft_putwchar(chr);
+			ct += wchr_len(chr);
+		}
 		if (newline)
 			ft_putchar('\n');
 	}
-	return (i);
+	return (ct);
 }

@@ -1,49 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   chr_conv.c                                         :+:      :+:    :+:   */
+/*   str_conv.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcortina <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/07 11:21:16 by gcortina          #+#    #+#             */
-/*   Updated: 2016/12/07 11:21:18 by gcortina         ###   ########.fr       */
+/*   Created: 2016/11/22 15:31:21 by gcortina          #+#    #+#             */
+/*   Updated: 2016/11/22 15:31:23 by gcortina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int			chr_conv(char *format, va_list args, int newline, char cap_c)
+int			str_conv(char *format, va_list args, int newline, char cap_s)
 {
 	int		c_printed;
-	char	arg;
-	char	*str;
+	char	*arg;
+	int		presicion;
 	char	*len_flag;
 	char	*flags;
 
-	c_printed = -1;
+	c_printed = 0;
 	len_flag = get_len_flag(format);
-	if (cap_c || len_flag)
-		c_printed = handle_wchar(len_flag, args, newline, format);
+	if (cap_s)
+		c_printed = handle_wchar_str("l", args, newline, format);
+	else if (len_flag)
+		c_printed = handle_wchar_str(len_flag, args, newline, format);
 	else
 	{
-		arg = va_arg(args, int);
+		presicion = get_pre(format);
 		flags = get_flags(format);
-		if (get_width(format))
-		{
-			if (!(str = malloc(sizeof(wchar_t) * 2)))
-				return (-1);
-			str[0] = arg;
-			str[1] = '\0';
-			handle_width(format, &str, 0);
-			handle_flags(format, flags, &str, 0);
-			ft_putstr(str);
-			c_printed = ft_strlen(str);
-		}
-		else
-		{
-			ft_putwchar(arg);
-			c_printed = 1;
-		}
+		arg = va_arg(args, char *);
+		if (!arg)
+			return (0);
+		if (presicion >= 0 && presicion < (int)ft_strlen(arg))
+			arg = ft_strsub(arg, 0, presicion);
+		handle_width(format, &arg, 0);
+		handle_flags(format, flags, &arg, 0);
+		ft_putstr(arg);
+		c_printed = ft_strlen(arg);
 		if (newline)
 			ft_putchar('\n');
 	}
