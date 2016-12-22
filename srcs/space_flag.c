@@ -1,43 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   zero_flag.c                                        :+:      :+:    :+:   */
+/*   space_flag.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcortina <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/08 10:57:46 by gcortina          #+#    #+#             */
-/*   Updated: 2016/12/08 10:57:48 by gcortina         ###   ########.fr       */
+/*   Created: 2016/12/19 10:21:53 by gcortina          #+#    #+#             */
+/*   Updated: 2016/12/19 10:21:54 by gcortina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	zero_flag(char **arg, int num, int space_flag)
+void	space_flag(char **arg, int precision)
 {
 	int		i;
+	int		len;
 	char	*str;
 	char	*temp;
 
 	i = 0;
 	str = *arg;
-	if (num < 0)
+	len = ft_strlen(str);
+	if ((str[0] == '0') && !precision)
+		str[0] = ' ';
+	else if (str[0] != ' ')
 	{
-		if (str[i] == ' ')
-			str[i++] = '-';
-		while (str[i] == ' ' || str[i] == '-')
-			str[i++] = '0';
-	}
-	else
-	{
-		if ((temp = ft_strchr(str, '+')))
+		if ((temp = ft_strnew(len + 1)))
 		{
-			*temp = '0';
-			str[0] = '+';
-			i = 1;
+			ft_memset(temp, ' ', len + 1);
+			i = len - 1;
+			while (len)
+			{
+				temp[i + 1] = str[i];
+				i--;
+				len--;
+			}
+			*arg = temp;
 		}
-		if (space_flag)
-			i = 1;
-		while (str[i] == ' ')
-			str[i++] = '0';
 	}
 }

@@ -30,17 +30,40 @@ int			str_conv(char *format, va_list args, int newline, char cap_s)
 	{
 		presicion = get_pre(format);
 		flags = get_flags(format);
-		arg = va_arg(args, char *);
-		if (!arg)
-			return (0);
-		if (presicion >= 0 && presicion < (int)ft_strlen(arg))
-			arg = ft_strsub(arg, 0, presicion);
-		handle_width(format, &arg, 0);
-		handle_flags(format, flags, &arg, 0);
-		ft_putstr(arg);
-		c_printed = ft_strlen(arg);
-		if (newline)
-			ft_putchar('\n');
+		if ((arg = va_arg(args, char *)))
+		{
+			if (!arg)
+				return (0);
+			if (presicion >= 0 && presicion < (int)ft_strlen(arg))
+				arg = ft_strsub(arg, 0, presicion);
+			handle_width(format, &arg, 0);
+			handle_flags(format, flags, &arg, 0);			
+			ft_putstr(arg);
+			c_printed = ft_strlen(arg);
+			if (newline)
+			{
+				ft_putchar('\n');
+				c_printed++;
+			}
+		}
+		else
+		{
+			if (get_width(format) && ft_strchr(format, '.'))
+			{
+				arg = "";
+				handle_width(format, &arg, 0);
+				handle_flags(format, flags, &arg, 0);
+				if (ft_strchr(flags, '0') && ft_strchr(format, '.'))
+					zero_flag(&arg, 0, 0);
+				ft_putstr(arg);
+				c_printed = ft_strlen(arg);
+			}
+			else if (!ft_strchr(format, '.'))
+			{
+				ft_putstr("(null)");
+				c_printed += 6;
+			}
+		}
 	}
 	return (c_printed);
 }

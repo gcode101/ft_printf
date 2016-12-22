@@ -12,19 +12,85 @@
 
 #include "ft_printf.h"
 
+static int	new_temp(const char **temp, int i)
+{
+	int 		re;
+	const char	*str;
+
+	re = 0;
+	str = *temp;
+	// printf("inside new_temp\n");
+	// printf("i: %d\n", i);
+	while (str[i])
+	{
+		if (str[i] != ' ' && str[i] != '%')
+			break ;
+		if (str[i] == '%')
+		{
+			// printf("looks like str[%d] equals percent_signs\n", i);
+			re = 1;
+			*temp = *temp + i + 1;
+			// printf("new_temp: %s\n", *temp);
+			break ;
+		}
+		i++;
+	}
+	return (re);
+}
+
 static int	percent_signs(const char * restrict str)
 {
-	int	i;
-	int	ct;
+	int			i;
+	int			ct;
+	const char	*temp;
 
 	i = 0;
 	ct = 0;
-	while (str[i])
+	temp = str;
+	// printf("temp: %s\n", temp);
+	while (temp[i])
 	{
-		if (str[i] == '%' && str[i - 1] != '%')
+		// printf("i: %d\n", i);
+		if (temp[i] == '%' && temp[i + 1] == ' ')
+		{
+			if (new_temp(&temp, i + 1))
+			{
+				ct++;
+				// printf("ct get incremented in A\n");
+				i = -1;
+			}
+		}
+		if (temp[i] == '%' && temp[i + 1] == '%')
+		{
+			// printf("i: %d\n", i);
+			if (i >= 0)
+			{
+				// printf("%s\n", "ct gets incremented in B");
+				ct++;
+				temp = temp + i + 2;
+				i = -1;
+				// printf("temp: %s\n", temp);
+			}
+		}
+		else if (i == 0 && temp[i] == '%')
+		{
 			ct++;
+			// printf("ct get incremented in C\n");
+			// printf("temp[%d]: %c\n", i, temp[i]);
+			// printf("temp[%d - 1]: %c\n", i, temp[i - 1]);
+		}
+		else if (temp[i] == '%' && temp[i - 1] != '%')
+		{
+			// printf("i: %d\n", i);
+			if (i >= 0)
+			{
+				// printf("%s\n", "ct gets incremented in D");
+				ct++;
+			}
+		}
 		i++;
 	}
+	// printf("percent_signs: %d\n", ct);
 	return (ct);
 }
 
@@ -49,7 +115,9 @@ int			ft_printf(const char * restrict format, ...)
 	// printf("numof_percent: %d\n", numof_percent);
 	while (numof_percent--)
 	{
-		//printf("before temp format_cpy: %s\n", format_cpy);
+		// printf("format_cpy: %s\n", format_cpy);
+		if (ft_strlen(format_cpy) == 0)
+			break ;
 		temp = ft_strchr(format_cpy, '%');
 		*temp = '\0';
 		//printf("-this gets printed out");
@@ -64,6 +132,7 @@ int			ft_printf(const char * restrict format, ...)
 		{
 			ft_putstr(format_cpy);
 			c_printed += ft_strlen(format_cpy);
+			break ;
 		}
 	}
 	// printf("returning c_printed: %d\n", c_printed);

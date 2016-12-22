@@ -35,6 +35,9 @@ int				decimal_conv(char *format, va_list args, int newline, char *long_flag)
 	ft_putstr(arg);
 	c_printed = ft_strlen(arg);
 	if (newline)
+	{
 		ft_putchar('\n');
+		c_printed++;
+	}
 	return (c_printed);
 }

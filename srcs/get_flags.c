@@ -32,6 +32,8 @@ char	*get_flags(char *format)
 			flags = ft_strjoin(flags, "-");
 		if (format[i] == '+' && !ft_strchr(flags, '+'))
 			flags = ft_strjoin(flags, "+");
+		if (format[i] == ' ' && !ft_strchr(flags, ' '))
+			flags = ft_strjoin(flags, " ");		
 		i++;							
 	}
 	return (flags);

@@ -1,40 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unsigned_conv.c                                    :+:      :+:    :+:   */
+/*   special_conv.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcortina <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/09 14:40:20 by gcortina          #+#    #+#             */
-/*   Updated: 2016/12/09 14:40:22 by gcortina         ###   ########.fr       */
+/*   Created: 2016/12/14 22:48:05 by gcortina          #+#    #+#             */
+/*   Updated: 2016/12/14 22:48:07 by gcortina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		unsigned_conv(char *format, va_list args, int newline, char *long_flag)
+int		special_conv(char *format, int newline)
 {
-	int		num;
 	int		c_printed;
+	int		i;
 	char	*arg;
-	char	*len_flag;
 	char	*flags;
-	char	*temp;
 
-	if (long_flag)
-		len_flag = long_flag;
-	else
-		len_flag = get_len_flag(format);
-	arg = handle_un_lenflag(len_flag, args, 10);
-	if (ft_strchr(arg, '-'))
-		num = -1;
-	else
-		num = 1;
-	c_printed = 0;
+	i = 0;
+	arg = format;
 	flags = get_flags(format);
-	if ((temp = ft_strchr(flags, ' ')))
-		*temp = '^';
-	modify_arg(format, flags, &arg, num);
+	while (arg[i])
+	{
+		if (!is_valid(arg[i]) && !ft_isdigit(arg[i]))
+			break ;
+		i++;
+	}
+	arg = &arg[i];
+	if (get_width(format))
+		handle_width(format, &arg, 0);
+	handle_flags(format, get_flags(format), &arg, 0);
+	if (ft_strchr(flags, '0') && ft_strchr(format, '.'))
+		zero_flag(&arg, 0, 0);	
 	ft_putstr(arg);
 	c_printed = ft_strlen(arg);
 	if (newline)
@@ -42,5 +41,5 @@ int		unsigned_conv(char *format, va_list args, int newline, char *long_flag)
 		ft_putchar('\n');
 		c_printed++;
 	}
-	return (c_printed);	
+	return (c_printed);
 }

@@ -18,6 +18,8 @@ void		modify_arg(char *format, char *flags, char **arg, int num)
 	int		width;
 
 	presicion = get_pre(format);
+	if (presicion == 0 && ft_strcmp(*arg, "0") == 0)
+		*arg = "";
 	if (presicion < 0)
 		presicion = 0;
 	width = get_width(format);
@@ -26,7 +28,7 @@ void		modify_arg(char *format, char *flags, char **arg, int num)
 		if (num < 0)
 			presicion++;
 		handle_width(format, arg, presicion);
-		zero_flag(arg, num);
+		zero_flag(arg, num, 0);
 	}
 	handle_width(format, arg, 0);
 	handle_flags(format, flags, arg, num);

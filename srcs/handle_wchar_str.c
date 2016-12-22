@@ -25,13 +25,16 @@ int				handle_wchar_str(char *len_flag, va_list args, int newline, char *format)
 	// printf("%s\n", "inside handle_wchar_str");
 	if (ft_strcmp(len_flag, "l") == 0)
 	{
+		flags = get_flags(format);
 		if ((str = va_arg(args, wchar_t *)))
 		{
+			// printf("str: {%S}\n", str);
 			presicion = get_pre(format);
-			flags = get_flags(format);
 			if (presicion >= 0 && presicion < ft_wstrlen(str))
 				str = ft_wstrsub(str, 0, presicion);
+			// printf("str: {%S}\n", str);
 			handle_wchar_width(format, &str);
+			// printf("str: {%S}\n", str);
 			handle_wflags(flags, &str);
 			while (str[++i])
 			{
@@ -43,8 +46,27 @@ int				handle_wchar_str(char *len_flag, va_list args, int newline, char *format)
 		}
 		else
 		{
-			ft_putstr("(null)");
-			ct += 6;
+			if (get_width(format) && ft_strchr(format, '.'))
+			{
+				str = L"";
+				handle_wchar_width(format, &str);
+				handle_wflags(format, &str);
+				i = 0;
+				if (ft_strchr(flags, '0') && ft_strchr(format, '.'))
+					while (str[i] == ' ')
+						str[i++] = '0';
+				i = -1;
+				while (str[++i])
+				{
+					ft_putwchar(str[i]);
+					ct += wchr_len(str[i]);
+				}
+			}
+			else if (!ft_strchr(format, '.'))
+			{
+				ft_putstr("(null)");
+				ct += 6;
+			}
 		}
 	}
 	return (ct);

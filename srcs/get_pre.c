@@ -19,7 +19,7 @@ int		get_pre(char *format)
 	int		start;
 
 	i = 0;
-	pre = -1;
+	pre = -2;
 	while (format[i])
 	{
 		if (format[i++] == '.')

@@ -57,7 +57,7 @@ wchar_t	*ft_wstrdup(wchar_t *src);
 int		decimal_conv(char *format, va_list args, int newline, char *long_flag);
 void	ft_putnbr(int nb);
 char	*ft_strcpy(char *dest, const char *src);
-void	zero_flag(char **arg, int num);
+void	zero_flag(char **arg, int num, int space_flag);
 char	*handle_dec_lenflag(char *len_flag, va_list args);
 char	*ft_itoa_base(long long value, int base);
 int		octal_conv(char *format, va_list args, int newline, char *long_flag);
@@ -68,4 +68,8 @@ char	*handle_un_lenflag(char *len_flag, va_list args, int base);
 int		ft_toupper(int c);
 int		chr_count(char *str, char chr);
 int		wchr_len(wchar_t chr);
+int		shift_right(char *str, int num);
+int		special_conv(char *format, int newline);
+int		is_valid(char c);
+void	space_flag(char **arg, int precision);
 #endif

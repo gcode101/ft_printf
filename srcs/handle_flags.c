@@ -74,18 +74,24 @@ void		handle_flags(char *format, char *flags, char **arg, int num)
 {
 	int		i;
 	int		precision;
+	int		space;
 
 	i = 0;
-	if ((precision = get_pre(format)) == -1)
+	space = 0;
+	if (ft_strchr(flags, ' '))
+		space = 1;
+	if ((precision = get_pre(format)) == -2)
 		precision = 0;
 	while (flags[i])
 	{
-		if (flags[i] == '0' && !ft_strchr(flags, '-') && !precision)
-			zero_flag(arg, num);
+		if (flags[i] == '0' && !ft_strchr(flags, '-') && !ft_strchr(format, '.'))
+			zero_flag(arg, num, space);
 		if (flags[i] == '-')
 			minos_flag(arg);
 		if (flags[i] == '+' && (num > 0))
 			plus_flag(arg, precision);
+		if (flags[i] == ' ' && (num > 0) && !ft_strchr(flags, '+'))
+			space_flag(arg, precision);		
 		i++;
 	}	
 }
