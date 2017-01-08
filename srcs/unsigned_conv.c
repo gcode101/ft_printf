@@ -34,6 +34,8 @@ int		unsigned_conv(char *format, va_list args, int newline, char *long_flag)
 	flags = get_flags(format);
 	if ((temp = ft_strchr(flags, ' ')))
 		*temp = '^';
+	if ((temp = ft_strchr(flags, '+')))
+		*temp = '^';
 	modify_arg(format, flags, &arg, num);
 	ft_putstr(arg);
 	c_printed = ft_strlen(arg);

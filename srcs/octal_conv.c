@@ -58,6 +58,7 @@ int		octal_conv(char *format, va_list args, int newline, char *long_flag)
 		len_flag = long_flag;
 	else
 		len_flag = get_len_flag(format);
+	// printf("%s\n", len_flag);
 	arg = handle_un_lenflag(len_flag, args, 8);
 	arg_len = ft_strlen(arg);
 	c_printed = 0;
