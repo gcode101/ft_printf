@@ -24,11 +24,14 @@ void		handle_wchar_width(char *format, wchar_t **arg)
 	str = *arg;
 	len = 0;
 	i = 0;
-	while (str[i])
-	{
-		len += wchr_len(str[i]);
-		i++;
-	}
+	// while (str[i])
+	// {
+	// 	len += wchr_len(str[i]);
+	// 	i++;
+	// }
+	len = ft_wstrlen(str);
+	// printf("len: %d\n", len);
+	// printf("width: %d\n", width);
 	if (len == 0)
 		len = 0;
 	else
@@ -44,7 +47,7 @@ void		handle_wchar_width(char *format, wchar_t **arg)
 			ft_wmemset(temp, ' ', width);
 			while (i >= 0)
 				temp[--width] = str[i--];
-			*arg = &temp[len];
+			*arg = temp;
 			// printf("str: {%S}\n", *arg);
 		}
 	}

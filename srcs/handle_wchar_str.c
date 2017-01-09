@@ -30,8 +30,17 @@ int				handle_wchar_str(char *len_flag, va_list args, int newline, char *format)
 		{
 			// printf("str: {%S}\n", str);
 			presicion = get_pre(format);
+			// printf("presicion: %d\n", presicion);
+			// printf("str length: %zd\n", ft_wstrlen(str));
 			if (presicion >= 0 && presicion < ft_wstrlen(str))
+			{
+				// printf("%s\n", "inside presicion");
 				str = ft_wstrsub(str, 0, presicion);
+				// while (str[++i])
+				// 	ft_putwchar(str[i]);
+				// ft_putchar('\n');
+				// i = -1;			
+			}
 			// printf("str: {%S}\n", str);
 			handle_wchar_width(format, &str);
 			// printf("str: {%S}\n", str);

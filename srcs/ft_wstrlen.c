@@ -15,9 +15,14 @@
 int		ft_wstrlen(wchar_t *str)
 {
 	int		i;
+	int		len;
 
 	i = 0;
+	len = 0;
 	while (str[i])
+	{
+		len+= wchr_len(str[i]);
 		i++;
-	return (i);
+	}
+	return (len);
 }

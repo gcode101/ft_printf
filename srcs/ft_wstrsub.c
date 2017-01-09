@@ -22,10 +22,10 @@ wchar_t	*ft_wstrsub(wchar_t *s, unsigned int start, size_t len)
 		return (NULL);
 	if (!(res = malloc(sizeof(wchar_t) * len + 1)))
 		return (NULL);
-	while (len > 0)
+	while ((int)len >= wchr_len(s[start]))
 	{
 		res[i++] = s[start++];
-		len--;
+		len -= wchr_len(s[start - 1]);
 	}
 	res[i] = '\0';
 	return (res);
