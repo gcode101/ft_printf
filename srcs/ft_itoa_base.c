@@ -6,7 +6,7 @@
 /*   By: gcortina <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/08 07:51:37 by gcortina          #+#    #+#             */
-/*   Updated: 2016/12/05 13:52:24 by gcortina         ###   ########.fr       */
+/*   Updated: 2017/01/10 13:27:56 by gcortina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,17 @@ static int	get_digits(long long num, int base)
 	return (digits);
 }
 
-char	*ft_itoa_base(long long value, int base)
+static char	*setup_re(char *re, int digits, int neg)
+{
+	if (!(re = malloc(sizeof(char) * digits + neg + 1)))
+		return (NULL);
+	if (neg)
+		re[0] = '-';
+	re[digits + neg] = '\0';
+	return (re);
+}
+
+char		*ft_itoa_base(long long value, int base)
 {
 	long long	num;
 	int			neg;
@@ -49,16 +59,14 @@ char	*ft_itoa_base(long long value, int base)
 		return ("-9223372036854775808");
 	num = value;
 	neg = 0;
+	re = NULL;
 	if (value < 0 && base == 10)
 		neg = 1;
 	if (num < 0)
 		num *= -1;
 	digits = get_digits(num, base);
-	if (!(re = malloc(sizeof(char) * digits + neg + 1)))
+	if (!(re = setup_re(re, digits, neg)))
 		return (NULL);
-	if (neg)
-		re[0] = '-';
-	re[digits + neg] = '\0';
 	if (!neg)
 		digits--;
 	while (digits >= neg)
@@ -68,4 +76,3 @@ char	*ft_itoa_base(long long value, int base)
 	}
 	return (re);
 }
-

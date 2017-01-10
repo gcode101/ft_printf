@@ -72,4 +72,7 @@ int		shift_right(char *str, int num);
 int		special_conv(char *format, int newline);
 int		is_valid(char c);
 void	space_flag(char **arg, int precision);
+int		print_chr(char c);
+int		end_of_format(char *format, int i);
+int		percent_signs(const char * restrict str);
 #endif

@@ -134,9 +134,6 @@ static char *unsigned_itoa_short(unsigned short int value, int base)
 	return (re);
 }
 
-
-#include "ft_printf.h"
-
 char	*handle_un_lenflag(char *len_flag, va_list args, int base)
 {
 	unsigned long num;

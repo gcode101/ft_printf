@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int				decimal_conv(char *format, va_list args, int newline, char *long_flag)
+int	decimal_conv(char *format, va_list args, int newline, char *long_flag)
 {
 	int		num;
 	int		c_printed;
@@ -20,7 +20,6 @@ int				decimal_conv(char *format, va_list args, int newline, char *long_flag)
 	char	*len_flag;
 	char	*flags;
 
-	// printf("inside decimal_conv\n");
 	if (long_flag)
 		len_flag = long_flag;
 	else
