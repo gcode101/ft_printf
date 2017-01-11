@@ -12,41 +12,43 @@
 
 #include "ft_printf.h"
 
-int				handle_wchar(char *len_flag, va_list args, int newline, char *format)
+static int	print_width(wchar_t chr, char *format, char *flags)
+{
+	wchar_t *str;
+	int		ct;
+	int		i;
+
+	ct = 0;
+	i = -1;
+	if (!(str = malloc(sizeof(wchar_t) * 2)))
+		return (-1);
+	str[0] = chr;
+	str[1] = '\0';
+	handle_wchar_width(format, &str);
+	handle_wflags(flags, &str);
+	while (str[++i])
+		ct += print_wchr(str[i]);
+	return (ct);
+}
+
+int			handle_wchar(char *len_flag, va_list args,
+								int newline, char *format)
 {
 	wchar_t chr;
-	wchar_t *str;
 	char	*flags;
-	int		i;
 	int		ct;
 
-	i = -1;
 	ct = 0;
 	if (ft_strcmp(len_flag, "l") == 0)
 	{
 		chr = (wchar_t)va_arg(args, wint_t);
 		flags = get_flags(format);
 		if (get_width(format))
-		{
-			if (!(str = malloc(sizeof(wchar_t) * 2)))
-				return (-1);
-			str[0] = chr;
-			str[1] = '\0';
-			handle_wchar_width(format, &str);
-			handle_wflags(flags, &str);
-			while (str[++i])
-			{
-				ft_putwchar(str[i]);
-				ct += wchr_len(str[i]);
-			}
-		}
+			ct += print_width(chr, format, flags);
 		else
-		{
-			ft_putwchar(chr);
-			ct += wchr_len(chr);
-		}
+			ct += print_wchr(chr);
 		if (newline)
-			ft_putchar('\n');
+			ct += print_chr('\n');
 	}
 	return (ct);
 }

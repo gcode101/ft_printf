@@ -6,7 +6,7 @@
 #    By: gcortina <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/17 13:11:26 by gcortina          #+#    #+#              #
-#    Updated: 2017/01/11 13:25:17 by gcortina         ###   ########.fr        #
+#    Updated: 2017/01/11 14:02:29 by gcortina         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SRC_FILES = ft_printf.c str_conv.c format_reader.c get_flags.c get_len_flag.c \
 			decimal_conv.c zero_flag.c handle_dec_lenflag.c ft_itoa_base.c octal_conv.c \
 			modify_arg.c hex_conv.c unsigned_conv.c handle_un_lenflag.c chr_count.c \
 			wchr_len.c shift_right.c special_conv.c is_valid.c space_flag.c print_chr.c \
-			end_of_format.c percent_signs.c get_char.c unsigned_itoa_short.c
+			end_of_format.c percent_signs.c get_char.c unsigned_itoa_short.c print_wchr.c
 LIB_FILES = ft_putstr.c ft_putchar.c ft_putendl.c ft_atoi.c ft_memdel.c ft_strchr.c \
 			ft_isdigit.c ft_strdup.c ft_strjoin.c ft_strlen.c ft_strnew.c ft_strsub.c \
 			ft_memset.c ft_isascii.c ft_bzero.c ft_strcmp.c ft_itoa.c ft_putnbr.c \

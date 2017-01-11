@@ -77,4 +77,5 @@ int		end_of_format(char *format, int i);
 int		percent_signs(const char * restrict str);
 char	get_char(int index);
 char 	*unsigned_itoa_short(unsigned short int value, int base);
+int		print_wchr(wchar_t chr);
 #endif
