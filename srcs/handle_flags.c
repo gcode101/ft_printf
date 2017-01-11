@@ -34,12 +34,34 @@ static void	minos_flag(char **arg)
 	}
 }
 
+static void	plus_flag_helper(char **arg, int len)
+{
+	char	*temp;
+	char	*str;
+	int		i;
+
+	str = *arg;
+	i = 0;
+	if ((temp = ft_strnew(len + 1)))
+	{
+		ft_memset(temp, ' ', len + 1);
+		i = len - 1;
+		while (len)
+		{
+			temp[i + 1] = str[i];
+			i--;
+			len--;
+		}
+		temp[i + 1] = '+';
+		*arg = temp;
+	}
+}
+
 static void	plus_flag(char **arg, int precision)
 {
 	int		i;
 	int		len;
 	char	*str;
-	char	*temp;
 
 	i = 0;
 	str = *arg;
@@ -53,21 +75,7 @@ static void	plus_flag(char **arg, int precision)
 		str[i - 1] = '+';
 	}
 	else
-	{
-		if ((temp = ft_strnew(len + 1)))
-		{
-			ft_memset(temp, ' ', len + 1);
-			i = len - 1;
-			while (len)
-			{
-				temp[i + 1] = str[i];
-				i--;
-				len--;
-			}
-			temp[i + 1] = '+';
-			*arg = temp;
-		}
-	}
+		plus_flag_helper(arg, len);
 }
 
 void		handle_flags(char *format, char *flags, char **arg, int num)
@@ -84,14 +92,15 @@ void		handle_flags(char *format, char *flags, char **arg, int num)
 		precision = 0;
 	while (flags[i])
 	{
-		if (flags[i] == '0' && !ft_strchr(flags, '-') && !ft_strchr(format, '.'))
+		if (flags[i] == '0' && !ft_strchr(flags, '-') &&
+			!ft_strchr(format, '.'))
 			zero_flag(arg, num, space);
 		if (flags[i] == '-')
 			minos_flag(arg);
 		if (flags[i] == '+' && (num > 0))
 			plus_flag(arg, precision);
 		if (flags[i] == ' ' && (num > 0) && !ft_strchr(flags, '+'))
-			space_flag(arg, precision);		
+			space_flag(arg, precision);
 		i++;
-	}	
+	}
 }

@@ -33,8 +33,8 @@ char	*get_flags(char *format)
 		if (format[i] == '+' && !ft_strchr(flags, '+'))
 			flags = ft_strjoin(flags, "+");
 		if (format[i] == ' ' && !ft_strchr(flags, ' '))
-			flags = ft_strjoin(flags, " ");		
-		i++;							
+			flags = ft_strjoin(flags, " ");
+		i++;
 	}
 	return (flags);
 }

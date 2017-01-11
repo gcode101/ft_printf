@@ -21,7 +21,7 @@ int		ft_wstrlen(wchar_t *str)
 	len = 0;
 	while (str[i])
 	{
-		len+= wchr_len(str[i]);
+		len += wchr_len(str[i]);
 		i++;
 	}
 	return (len);

@@ -6,19 +6,11 @@
 /*   By: gcortina <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/09 10:25:38 by gcortina          #+#    #+#             */
-/*   Updated: 2016/12/09 10:25:44 by gcortina         ###   ########.fr       */
+/*   Updated: 2017/01/11 12:41:04 by gcortina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-static char	get_char(int index)
-{
-	char	*str;
-
-	str = "0123456789abcdef";
-	return (str[index]);
-}
 
 static int	get_digits(char num, int base)
 {
@@ -38,6 +30,16 @@ static int	get_digits(char num, int base)
 	return (digits);
 }
 
+static char	*setup_re(char *re, int digits, int neg)
+{
+	if (!(re = malloc(sizeof(char) * digits + neg + 1)))
+		return (NULL);
+	if (neg)
+		re[0] = '-';
+	re[digits + neg] = '\0';
+	return (re);
+}
+
 static char	*ft_itoa_char(char value, int base)
 {
 	char		num;
@@ -49,16 +51,14 @@ static char	*ft_itoa_char(char value, int base)
 		return ("-128");
 	num = value;
 	neg = 0;
+	re = NULL;
 	if (value < 0 && base == 10)
 		neg = 1;
 	if (num < 0)
 		num *= -1;
 	digits = get_digits(num, base);
-	if (!(re = malloc(sizeof(char) * digits + neg + 1)))
+	if (!(re = setup_re(re, digits, neg)))
 		return (NULL);
-	if (neg)
-		re[0] = '-';
-	re[digits + neg] = '\0';
 	if (!neg)
 		digits--;
 	while (digits >= neg)
@@ -69,9 +69,8 @@ static char	*ft_itoa_char(char value, int base)
 	return (re);
 }
 
-char	*handle_dec_lenflag(char *len_flag, va_list args)
+char		*handle_dec_lenflag(char *len_flag, va_list args)
 {
-
 	if (len_flag && ft_strcmp(len_flag, "l") == 0)
 		return (ft_itoa_base(va_arg(args, long), 10));
 	else if (len_flag && ft_strcmp(len_flag, "ll") == 0)

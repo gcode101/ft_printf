@@ -12,22 +12,12 @@
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *restrict format, ...)
+static int	printout(char *format_cpy, int numof_percent, va_list args)
 {
-	va_list	args;
-	int		numof_percent;
 	int		c_printed;
-	char	*format_cpy;
 	char	*temp;
 
 	c_printed = 0;
-	format_cpy = ft_strdup(format);
-	if ((numof_percent = percent_signs(format)) == 0)
-	{
-		ft_putstr(format);
-		c_printed = ft_strlen(format);
-	}
-	va_start(args, format);
 	while (numof_percent--)
 	{
 		if (ft_strlen(format_cpy) == 0)
@@ -45,6 +35,25 @@ int	ft_printf(const char *restrict format, ...)
 			break ;
 		}
 	}
+	return (c_printed);
+}
+
+int			ft_printf(const char *restrict format, ...)
+{
+	va_list	args;
+	int		numof_percent;
+	int		c_printed;
+	char	*format_cpy;
+
+	c_printed = 0;
+	format_cpy = ft_strdup(format);
+	if ((numof_percent = percent_signs(format)) == 0)
+	{
+		ft_putstr(format);
+		c_printed = ft_strlen(format);
+	}
+	va_start(args, format);
+	c_printed += printout(format_cpy, numof_percent, args);
 	va_end(args);
 	return (c_printed);
 }

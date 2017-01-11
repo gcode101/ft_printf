@@ -34,7 +34,7 @@ char	*get_len_flag(char *format)
 		if (format[i] == 't')
 			return ((result = ft_strdup("t")));
 		if (format[i] == 'z')
-			return ((result = ft_strdup("z")));										
+			return ((result = ft_strdup("z")));
 		i++;
 	}
 	return (result);

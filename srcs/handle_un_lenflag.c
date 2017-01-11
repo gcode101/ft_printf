@@ -6,19 +6,11 @@
 /*   By: gcortina <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/09 14:42:57 by gcortina          #+#    #+#             */
-/*   Updated: 2016/12/09 14:42:59 by gcortina         ###   ########.fr       */
+/*   Updated: 2017/01/11 13:35:40 by gcortina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-static char	get_char(int index)
-{
-	char	*str;
-
-	str = "0123456789abcdef";
-	return (str[index]);
-}
 
 static int	get_digits(unsigned long long num, int base)
 {
@@ -38,7 +30,7 @@ static int	get_digits(unsigned long long num, int base)
 	return (digits);
 }
 
-static char *unsigned_itoa_base(unsigned long long value, int base)
+static char	*unsigned_itoa_base(unsigned long long value, int base)
 {
 	unsigned long long	num;
 	int					digits;
@@ -76,7 +68,7 @@ static int	get_char_digits(unsigned char num, int base)
 	return (digits);
 }
 
-static char *unsigned_itoa_char(unsigned char value, int base)
+static char	*unsigned_itoa_char(unsigned char value, int base)
 {
 	unsigned char		num;
 	int					digits;
@@ -96,45 +88,7 @@ static char *unsigned_itoa_char(unsigned char value, int base)
 	return (re);
 }
 
-static int	get_digits_short(unsigned short int num, int base)
-{
-	unsigned short int	nb;
-	int					digits;
-
-	if (num == 0)
-		digits = 1;
-	else
-		digits = 0;
-	nb = num;
-	while (nb != 0)
-	{
-		nb /= base;
-		digits++;
-	}
-	return (digits);
-}
-
-static char *unsigned_itoa_short(unsigned short int value, int base)
-{
-	unsigned short int	num;
-	int					digits;
-	char				*re;
-
-	num = value;
-	digits = get_digits_short(num, base);
-	if (!(re = malloc(sizeof(char) * digits + 1)))
-		return (NULL);
-	re[digits] = '\0';
-	digits--;
-	while (digits >= 0)
-	{
-		re[digits--] = get_char(num % base);
-		num /= base;
-	}
-	return (re);
-}
-
-char	*handle_un_lenflag(char *len_flag, va_list args, int base)
+char		*handle_un_lenflag(char *len_flag, va_list args, int base)
 {
 	unsigned long num;
 

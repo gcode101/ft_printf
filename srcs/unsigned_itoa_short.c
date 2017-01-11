@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa_base.c                                     :+:      :+:    :+:   */
+/*   unsigned_itoa_short.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gcortina <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/08 07:51:37 by gcortina          #+#    #+#             */
-/*   Updated: 2017/01/10 13:27:56 by gcortina         ###   ########.fr       */
+/*   Created: 2017/01/11 13:25:32 by gcortina          #+#    #+#             */
+/*   Updated: 2017/01/11 13:36:19 by gcortina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	get_digits(long long num, int base)
+static int	get_digits_short(unsigned short int num, int base)
 {
-	long long	nb;
-	int			digits;
+	unsigned short int	nb;
+	int					digits;
 
 	if (num == 0)
 		digits = 1;
@@ -30,38 +30,19 @@ static int	get_digits(long long num, int base)
 	return (digits);
 }
 
-static char	*setup_re(char *re, int digits, int neg)
+char		*unsigned_itoa_short(unsigned short int value, int base)
 {
-	if (!(re = malloc(sizeof(char) * digits + neg + 1)))
-		return (NULL);
-	if (neg)
-		re[0] = '-';
-	re[digits + neg] = '\0';
-	return (re);
-}
+	unsigned short int	num;
+	int					digits;
+	char				*re;
 
-char		*ft_itoa_base(long long value, int base)
-{
-	long long	num;
-	int			neg;
-	int			digits;
-	char		*re;
-
-	if (value == -9223372036854775807 - 1)
-		return ("-9223372036854775808");
 	num = value;
-	neg = 0;
-	re = NULL;
-	if (value < 0 && base == 10)
-		neg = 1;
-	if (num < 0)
-		num *= -1;
-	digits = get_digits(num, base);
-	if (!(re = setup_re(re, digits, neg)))
+	digits = get_digits_short(num, base);
+	if (!(re = malloc(sizeof(char) * digits + 1)))
 		return (NULL);
-	if (!neg)
-		digits--;
-	while (digits >= neg)
+	re[digits] = '\0';
+	digits--;
+	while (digits >= 0)
 	{
 		re[digits--] = get_char(num % base);
 		num /= base;
