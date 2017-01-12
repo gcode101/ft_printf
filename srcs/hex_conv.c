@@ -12,43 +12,13 @@
 
 #include "ft_printf.h"
 
-static void	hash_flag(char *format, char **arg, int arg_len, char p)
+static void	hash_flag_helper(char **arg, int shift)
 {
 	char	*str;
-	int		len;
-	int		width;
 	int		i;
-	int		shift;
-	int		precision;
 
 	i = 0;
-	shift = 2;
-	// printf("arg: %s\n", *arg);
-	if (p != 'p' && (ft_strcmp(*arg, "0") == 0 || ft_strlen(*arg) == 0))
-		return ;
-	// if ((precision = get_pre(format)) == -1)
-	// 	precision = 0;
-	precision = get_pre(format);
-	// printf("arg: {%s}\n", *arg);
-	// printf("arg_len: %zd\n", ft_strlen(*arg));
-	width = get_width(format);
-	// printf("width: %d\n", width);
-	// printf("precision: %d\n", precision);
-	if ((width >= arg_len + 2) && width >= precision + 2)
-		len = ft_strlen(*arg);
-	else if ((width == arg_len + 1 &&  width > precision) || (width == precision + 1
-		&& precision >= arg_len))
-	{
-		len = ft_strlen(*arg) + 1;
-		shift = 1;
-	}
-	else
-		len = ft_strlen(*arg) + 2;
-	// printf("len: %d\n", len);
-	handle_width(format, arg, len);
 	str = *arg;
-	// printf("str: {%s}\n", str);
-	// printf("shift: %d\n", shift);
 	shift_right(str, shift);
 	if (str[0] == ' ' && str[1] == ' ')
 	{
@@ -64,9 +34,51 @@ static void	hash_flag(char *format, char **arg, int arg_len, char p)
 	}
 }
 
-int		hex_conv(char *format, va_list args, int newline, char x_or_p)
+static void	hash_flag(char *format, char **arg, int arg_len, char p)
+{
+	int		len;
+	int		width;
+	int		shift;
+	int		precision;
+
+	shift = 2;
+	if (p != 'p' && (ft_strcmp(*arg, "0") == 0 || ft_strlen(*arg) == 0))
+		return ;
+	precision = get_pre(format);
+	width = get_width(format);
+	if ((width >= arg_len + 2) && width >= precision + 2)
+		len = ft_strlen(*arg);
+	else if ((width == arg_len + 1 && width > precision) ||
+			(width == precision + 1 && precision >= arg_len))
+	{
+		len = ft_strlen(*arg) + 1;
+		shift = 1;
+	}
+	else
+		len = ft_strlen(*arg) + 2;
+	handle_width(format, arg, len);
+	hash_flag_helper(arg, shift);
+}
+
+static int	printout(char *arg, char x_or_p, int newline)
 {
 	int		i;
+	int		c_printed;
+
+	i = -1;
+	c_printed = 0;
+	if (x_or_p == 'X')
+		while (arg[++i])
+			arg[i] = ft_toupper(arg[i]);
+	ft_putstr(arg);
+	c_printed = ft_strlen(arg);
+	if (newline)
+		c_printed += print_chr('\n');
+	return (c_printed);
+}
+
+int			hex_conv(char *format, va_list args, int newline, char x_or_p)
+{
 	int		c_printed;
 	int		arg_len;
 	char	*arg;
@@ -87,16 +99,5 @@ int		hex_conv(char *format, va_list args, int newline, char x_or_p)
 	modify_arg(format, flags, &arg, 0);
 	if (ft_strchr(flags, '#'))
 		hash_flag(format, &arg, arg_len, x_or_p);
-	i = -1;
-	if (x_or_p == 'X')
-		while (arg[++i])
-			arg[i] = ft_toupper(arg[i]);
-	ft_putstr(arg);
-	c_printed = ft_strlen(arg);
-	if (newline)
-	{
-		ft_putchar('\n');
-		c_printed++;
-	}
-	return (c_printed);	
+	return (printout(arg, x_or_p, newline));
 }

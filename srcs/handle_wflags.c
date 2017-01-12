@@ -57,5 +57,5 @@ void		handle_wflags(char *flags, wchar_t **arg)
 		if (flags[i] == '-')
 			minos_wflag(arg);
 		i++;
-	}	
+	}
 }
