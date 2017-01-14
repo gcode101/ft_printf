@@ -12,26 +12,19 @@
 
 #include "ft_printf.h"
 
-int		unsigned_conv(char *format, va_list args, int newline, char *long_flag)
+static int	printout(char *format, char *arg, int newline)
 {
-	int		num;
 	int		c_printed;
-	char	*arg;
-	char	*len_flag;
+	int		num;
 	char	*flags;
 	char	*temp;
 
-	if (long_flag)
-		len_flag = long_flag;
-	else
-		len_flag = get_len_flag(format);
-	arg = handle_un_lenflag(len_flag, args, 10);
+	c_printed = 0;
+	flags = get_flags(format);
 	if (ft_strchr(arg, '-'))
 		num = -1;
 	else
 		num = 1;
-	c_printed = 0;
-	flags = get_flags(format);
 	if ((temp = ft_strchr(flags, ' ')))
 		*temp = '^';
 	if ((temp = ft_strchr(flags, '+')))
@@ -40,9 +33,19 @@ int		unsigned_conv(char *format, va_list args, int newline, char *long_flag)
 	ft_putstr(arg);
 	c_printed = ft_strlen(arg);
 	if (newline)
-	{
-		ft_putchar('\n');
-		c_printed++;
-	}
-	return (c_printed);	
+		c_printed += print_chr('\n');
+	return (c_printed);
+}
+
+int			unsigned_conv(char *format, va_list args, int newline, char *lflag)
+{
+	char	*arg;
+	char	*len_flag;
+
+	if (lflag)
+		len_flag = lflag;
+	else
+		len_flag = get_len_flag(format);
+	arg = handle_un_lenflag(len_flag, args, 10);
+	return (printout(format, arg, newline));
 }

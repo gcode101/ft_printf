@@ -6,12 +6,11 @@
 #    By: gcortina <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/17 13:11:26 by gcortina          #+#    #+#              #
-#    Updated: 2017/01/11 14:02:29 by gcortina         ###   ########.fr        #
+#    Updated: 2017/01/13 16:28:24 by gcortina         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
-EXE = ft_printf
 HEADER = ./includes/
 SRCDIR = ./srcs/
 LIBDIR = ./lib/
@@ -42,9 +41,6 @@ $(NAME):
 	$(CC) $(OPTIONS) $(SRCS) $(LIB_SRCS)
 	ar rc $(NAME) $(OBJ_NAME) $(OBJLIB_NAME)
 	$(RLIB) $(NAME)
-
-run:
-	$(CC) -I $(HEADER) $(SRCS) $(LIB_SRCS) -o $(EXE)
 
 clean:
 	rm -f $(OBJ_NAME) $(OBJLIB_NAME)

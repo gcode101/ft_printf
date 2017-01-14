@@ -33,13 +33,10 @@ int		special_conv(char *format, int newline)
 		handle_width(format, &arg, 0);
 	handle_flags(format, get_flags(format), &arg, 0);
 	if (ft_strchr(flags, '0') && ft_strchr(format, '.'))
-		zero_flag(&arg, 0, 0);	
+		zero_flag(&arg, 0, 0);
 	ft_putstr(arg);
 	c_printed = ft_strlen(arg);
 	if (newline)
-	{
-		ft_putchar('\n');
-		c_printed++;
-	}
+		c_printed += print_chr('\n');
 	return (c_printed);
 }

@@ -12,11 +12,30 @@
 
 #include "ft_printf.h"
 
-void	zero_flag(char **arg, int num, int space_flag)
+static void	handle_positive_num(char **arg, int space_flag)
+{
+	char	*temp;
+	char	*str;
+	int		i;
+
+	i = 0;
+	str = *arg;
+	if ((temp = ft_strchr(str, '+')))
+	{
+		*temp = '0';
+		str[0] = '+';
+		i = 1;
+	}
+	if (space_flag)
+		i = 1;
+	while (str[i] == ' ')
+		str[i++] = '0';
+}
+
+void		zero_flag(char **arg, int num, int space_flag)
 {
 	int		i;
 	char	*str;
-	char	*temp;
 
 	i = 0;
 	str = *arg;
@@ -28,16 +47,5 @@ void	zero_flag(char **arg, int num, int space_flag)
 			str[i++] = '0';
 	}
 	else
-	{
-		if ((temp = ft_strchr(str, '+')))
-		{
-			*temp = '0';
-			str[0] = '+';
-			i = 1;
-		}
-		if (space_flag)
-			i = 1;
-		while (str[i] == ' ')
-			str[i++] = '0';
-	}
+		handle_positive_num(arg, space_flag);
 }

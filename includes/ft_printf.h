@@ -6,7 +6,7 @@
 /*   By: gcortina <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/17 13:26:05 by gcortina          #+#    #+#             */
-/*   Updated: 2016/11/17 13:26:08 by gcortina         ###   ########.fr       */
+/*   Updated: 2017/01/13 12:47:41 by gcortina         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdio.h>
 # include <wchar.h>
 
-int		ft_printf(const char * restrict format, ...);
+int		ft_printf(const char *restrict format, ...);
 void	ft_putchar(char c);
 void	ft_putendl(char const *s);
 int		ft_strcmp(const char *s1, const char *s2);
@@ -44,7 +44,7 @@ int		ft_isascii(int c);
 void	ft_bzero(void *s, size_t n);
 void	ft_putwchar(wchar_t chr);
 int		handle_wchar(char *len_flag, va_list args, int newline, char *format);
-int		handle_wchar_str(char *len_flag, va_list args, int newline, char *format);
+int		handle_wchar_str(char *lflag, va_list args, int newline, char *format);
 int		get_width(char *format);
 void	handle_flags(char *format, char *flags, char **arg, int num);
 int		chr_conv(char *format, va_list args, int newline, char cap_c);
@@ -63,7 +63,7 @@ char	*ft_itoa_base(long long value, int base);
 int		octal_conv(char *format, va_list args, int newline, char *long_flag);
 void	modify_arg(char *format, char *flags, char **arg, int num);
 int		hex_conv(char *format, va_list args, int newline, char cap_x);
-int		unsigned_conv(char *format, va_list args, int newline, char *long_flag);
+int		unsigned_conv(char *format, va_list args, int newline, char *lflag);
 char	*handle_un_lenflag(char *len_flag, va_list args, int base);
 int		ft_toupper(int c);
 int		chr_count(char *str, char chr);
@@ -74,8 +74,8 @@ int		is_valid(char c);
 void	space_flag(char **arg, int precision);
 int		print_chr(char c);
 int		end_of_format(char *format, int i);
-int		percent_signs(const char * restrict str);
+int		percent_signs(const char *restrict str);
 char	get_char(int index);
-char 	*unsigned_itoa_short(unsigned short int value, int base);
+char	*unsigned_itoa_short(unsigned short int value, int base);
 int		print_wchr(wchar_t chr);
 #endif
